@@ -5,6 +5,7 @@ using GestionEvidencias.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Reflection.PortableExecutable;
 using System.Security.Policy;
 
@@ -68,7 +69,7 @@ namespace GestionEvidencias.Controllers
                 };
 
                 //List temporales = await _context.Temporales.ToListAsync();
-                
+
 
                 //foreach (var item in temporales)
                 //{
@@ -76,7 +77,7 @@ namespace GestionEvidencias.Controllers
                 //    {
                 //        new EvidenciaEstudiante
                 //        {
-                //            Estudiante = await _context.Estudiantes.FindAsync(id)
+                //            Estudiante = await _context.Estudiantes.FindAsync(item)
                 //        }
 
                 //    };
