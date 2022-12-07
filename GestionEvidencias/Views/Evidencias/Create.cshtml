@@ -1,0 +1,137 @@
+﻿@using GestionEvidencias.Enums
+@model GestionEvidencias.Models.CreateEvidenciaViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear</h1>
+
+<h4>Evidencia</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Estudiantes" />
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Titulo" class="control-label"></label>
+                        <input asp-for="Titulo" class="form-control" />
+                        <span asp-validation-for="Titulo" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Descripcion" class="control-label"></label>
+                        <input asp-for="Descripcion" class="form-control" />
+                        <span asp-validation-for="Descripcion" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="EstudianteId" class="control-label"></label>
+                        <select asp-for="EstudianteId" asp-items="Model.Estudiantes" class="form-control" id="EstudianteId"></select>
+                        <span asp-validation-for="EstudianteId" class="text-danger"></span>
+
+                    </div>
+
+
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Tipo" class="control-label"></label>
+                        <select asp-for="Tipo" class="form-control" asp-items="@Html.GetEnumSelectList(typeof(TipoArchivo))"><option value=""></option></select>
+                        <span asp-validation-for="Tipo" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="File" class="control-label"></label>
+                        <input asp-for="File" class="form-control" type="file" />
+                        <span asp-validation-for="File" class="text-danger"></span>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="form-group mt-2">
+                <input type="submit" value="Crear" class="btn btn-outline-primary" />
+                <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Estudiantes</h2>
+        <table id="tblEstudiantes">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h2>Tipos</h2>
+        <table id="tblTipos">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            $('#EstudianteId').change(function () {
+                const estudianteId = $(this).val();
+                const estudiante = $("#EstudianteId option:selected").text();
+
+                $('#tblEstudiantes').append('<tr><td>' + estudianteId + '</td><td>' + estudiante + '</td></tr>');
+
+
+                // $('#myTable tr:last').after('<tr>'+ estudianteId'</tr>');
+                const url = "/Evidencias/llenarTabla?estudianteId=" + estudianteId;
+                $.get(url, function () {
+                });
+            });
+
+            $('#tipoId').change(function () {
+                const tipoId = $(this).val();
+                const tipo = $("#tipoId option:selected").text();
+
+                $('#tblTipos').append('<tr><td>' + tipoId + '</td><td>' + tipo + '</td></tr>');
+
+
+                // $('#myTable tr:last').after('<tr>'+ estudianteId'</tr>');
+                //const url = "/Evidencias/llenarTabla?estudianteId=" + estudianteId;
+                //$.get(url, function () {
+                //});
+            });
+
+
+
+        });
+    </script>
+
+    }
+
